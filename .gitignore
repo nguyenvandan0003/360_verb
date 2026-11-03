@@ -1,0 +1,22 @@
+# Root .gitignore for Verb360 AI
+
+# PocketBase backend data and binaries
+backend/pb_data/
+backend/server
+backend/seeder
+backend/*.aiff
+backend/*.mp3
+
+# Flutter & Dart
+app/.dart_tool/
+app/.flutter-plugins
+app/.flutter-plugins-dependencies
+app/build/
+app/.packages
+app/.pub-cache/
+app/.pub/
+
+# OS specific
+.DS_Store
+*.swp
+*.bak
