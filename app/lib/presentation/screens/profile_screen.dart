@@ -459,7 +459,7 @@ class ProfileScreen extends ConsumerWidget {
                           ),
                           SizedBox(height: 2),
                           Text(
-                            'Cổng 8095 • Tích hợp IAP & DeepSeek Gateway',
+                            'verd.phuongdan.io.vn • IAP & DeepSeek Gateway',
                             style: TextStyle(color: Color(0xFF64748B), fontSize: 12),
                           ),
                         ],

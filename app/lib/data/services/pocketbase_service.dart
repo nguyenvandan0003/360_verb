@@ -17,7 +17,7 @@ class PocketBaseService {
   late final PocketBase pb;
   final http.Client _client = http.Client();
 
-  PocketBaseService({this.baseUrl = 'http://127.0.0.1:8095'}) {
+  PocketBaseService({this.baseUrl = 'https://verd.phuongdan.io.vn'}) {
     pb = PocketBase(baseUrl);
   }
 
