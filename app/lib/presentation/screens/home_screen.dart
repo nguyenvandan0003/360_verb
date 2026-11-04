@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/theme/app_theme.dart';
+import '../../data/models/verb.dart';
 import '../../logic/auth_provider.dart';
 import '../../logic/gamification_providers.dart';
 import '../../logic/iap_provider.dart';
 import '../../logic/srs_providers.dart';
+import '../../logic/tts_provider.dart';
+import '../../logic/verb_providers.dart';
 import '../widgets/auth_modal.dart';
 import '../widgets/paywall_modal.dart';
 import 'practice/fill_blanks_screen.dart';
@@ -16,40 +19,46 @@ class HomeScreen extends ConsumerWidget {
 
   const HomeScreen({super.key, required this.onNavigateToDictionary});
 
+  String _getGreeting() {
+    final hour = DateTime.now().hour;
+    if (hour < 12) return 'Chào buổi sáng';
+    if (hour < 18) return 'Chào buổi chiều';
+    return 'Chào buổi tối';
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final gamificationAsync = ref.watch(gamificationProvider);
     final dueVerbsAsync = ref.watch(dueVerbsProvider);
+    final allVerbsAsync = ref.watch(allVerbsProvider);
     final authState = ref.watch(authProvider);
     final iapState = ref.watch(iapProvider);
+    final tts = ref.watch(ttsServiceProvider);
     final isCompact = MediaQuery.of(context).size.width <= 360;
 
     return Scaffold(
       appBar: AppBar(
         titleSpacing: isCompact ? 8 : 16,
-        title: FittedBox(
-          fit: BoxFit.scaleDown,
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                padding: const EdgeInsets.all(7),
-                decoration: BoxDecoration(
-                  gradient: AppTheme.primaryGradient,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: const Icon(Icons.menu_book_rounded, color: Colors.white, size: 18),
+        title: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              padding: const EdgeInsets.all(7),
+              decoration: BoxDecoration(
+                gradient: AppTheme.primaryGradient,
+                borderRadius: BorderRadius.circular(10),
               ),
-              const SizedBox(width: 8),
-              const Flexible(
-                child: Text(
-                  '360 Động từ bất quy tắc',
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(fontWeight: FontWeight.w800, fontSize: 16),
-                ),
+              child: const Icon(Icons.menu_book_rounded, color: Colors.white, size: 18),
+            ),
+            const SizedBox(width: 8),
+            const Flexible(
+              child: Text(
+                '360 Động từ bất quy tắc',
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(fontWeight: FontWeight.w800, fontSize: 16),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
         actions: [
           // Gamification streak & xp
@@ -169,13 +178,18 @@ class HomeScreen extends ConsumerWidget {
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         children: [
-          // Greeting & Welcome
+          // Greeting & Learning Subtitle
           Text(
-            authState.isAuthenticated ? 'Chào ${authState.user?.name ?? 'bạn'}! 👋' : 'Chào bạn! 👋',
+            authState.isAuthenticated
+                ? '${_getGreeting()}, ${authState.user?.name ?? 'bạn'}! 👋'
+                : '${_getGreeting()}! 👋',
             style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w900, letterSpacing: -0.5),
           ),
           const SizedBox(height: 6),
-          Row(
+          Wrap(
+            spacing: 6,
+            runSpacing: 4,
+            crossAxisAlignment: WrapCrossAlignment.center,
             children: [
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
@@ -188,19 +202,26 @@ class HomeScreen extends ConsumerWidget {
                   style: TextStyle(fontSize: 11, fontWeight: FontWeight.w800, color: AppTheme.primary),
                 ),
               ),
-              const SizedBox(width: 8),
-              Expanded(
-                child: Text(
-                  'Làm chủ 360 động từ với SRS & Gia sư AI.',
-                  style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
-                  overflow: TextOverflow.ellipsis,
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                decoration: BoxDecoration(
+                  color: const Color(0xFF10B981).withValues(alpha: 0.12),
+                  borderRadius: BorderRadius.circular(8),
                 ),
+                child: const Text(
+                  'Gia sư AI',
+                  style: TextStyle(fontSize: 11, fontWeight: FontWeight.w800, color: Color(0xFF059669)),
+                ),
+              ),
+              Text(
+                'Làm chủ 360 động từ với SRS & phản xạ.',
+                style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
               ),
             ],
           ),
           const SizedBox(height: 16),
 
-          // Banner SRS Review Due Card
+          // Banner SRS Review Due Card (Spaced Repetition Golden Time)
           dueVerbsAsync.when(
             data: (dueVerbs) {
               final count = dueVerbs.length;
@@ -325,9 +346,22 @@ class HomeScreen extends ConsumerWidget {
             error: (err, _) => const SizedBox.shrink(),
           ),
 
-          const SizedBox(height: 24),
+          const SizedBox(height: 20),
 
-          // Section Title
+          // Daily Verb Spotlight Card (Động từ nổi bật hôm nay)
+          allVerbsAsync.maybeWhen(
+            data: (verbs) {
+              if (verbs.isEmpty) return const SizedBox.shrink();
+              final dayIndex = DateTime.now().day % verbs.length;
+              final featured = verbs[dayIndex];
+              return _buildSpotlightCard(context, featured, tts);
+            },
+            orElse: () => const SizedBox.shrink(),
+          ),
+
+          const SizedBox(height: 22),
+
+          // Section Title: Practice Modes
           const Row(
             children: [
               Expanded(
@@ -341,24 +375,11 @@ class HomeScreen extends ConsumerWidget {
           ),
           const SizedBox(height: 12),
 
-          // 3 Practice Modes Layout: 1 Hero AI Card + 2 Grid Cards
-          _buildModernPracticeCard(
-            context,
-            title: 'Gia sư AI',
-            subtitle: 'Chấm điểm cấu trúc thì, phân tích ngữ pháp & gợi ý viết lại tự nhiên chuẩn bản xứ',
-            icon: Icons.auto_awesome_rounded,
-            gradient: const [Color(0xFF10B981), Color(0xFF059669)],
-            tag: 'Gia sư AI',
-            isAi: true,
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => const AiWritingScreen()),
-              );
-            },
-          ),
+          // 1 Hero AI Chat Card (Interactive Chat)
+          _buildHeroAiChatCard(context),
           const SizedBox(height: 12),
 
+          // 2 Grid Cards (Fill blanks & Speed Quiz)
           Row(
             children: [
               Expanded(
@@ -466,6 +487,271 @@ class HomeScreen extends ConsumerWidget {
     );
   }
 
+  Widget _buildSpotlightCard(BuildContext context, Verb verb, dynamic tts) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: const Color(0xFF3B82F6).withValues(alpha: 0.2)),
+        boxShadow: [
+          BoxShadow(
+            color: const Color(0xFF3B82F6).withValues(alpha: 0.06),
+            blurRadius: 12,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFEFF6FF),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: const Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.star_rounded, size: 14, color: Color(0xFF2563EB)),
+                      SizedBox(width: 4),
+                      Flexible(
+                        child: Text(
+                          'TỪ NỔI BẬT HÔM NAY',
+                          style: TextStyle(
+                            fontSize: 10,
+                            fontWeight: FontWeight.w800,
+                            color: Color(0xFF1D4ED8),
+                            letterSpacing: 0.5,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(width: 8),
+              IconButton(
+                icon: const Icon(Icons.volume_up_rounded, size: 20, color: AppTheme.primary),
+                tooltip: 'Nghe phát âm',
+                visualDensity: VisualDensity.compact,
+                padding: EdgeInsets.zero,
+                constraints: const BoxConstraints(),
+                onPressed: () => tts.speak('${verb.v1}, ${verb.v2}, ${verb.v3}'),
+              ),
+            ],
+          ),
+          const SizedBox(height: 10),
+          Wrap(
+            crossAxisAlignment: WrapCrossAlignment.center,
+            spacing: 8,
+            runSpacing: 4,
+            children: [
+              Text(
+                verb.v1,
+                style: const TextStyle(fontWeight: FontWeight.w900, fontSize: 20, color: Color(0xFF0F172A)),
+              ),
+              Text(
+                '→ ${verb.v2} → ${verb.v3}',
+                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: Color(0xFF2563EB)),
+              ),
+            ],
+          ),
+          const SizedBox(height: 4),
+          Text(
+            verb.meaningVi,
+            style: const TextStyle(fontSize: 13, color: Color(0xFF475569)),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+          const SizedBox(height: 12),
+          SizedBox(
+            width: double.infinity,
+            child: OutlinedButton.icon(
+              style: OutlinedButton.styleFrom(
+                foregroundColor: AppTheme.primary,
+                side: BorderSide(color: AppTheme.primary.withValues(alpha: 0.25)),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                visualDensity: VisualDensity.compact,
+              ),
+              icon: const Icon(Icons.chat_bubble_outline_rounded, size: 16),
+              label: const Text(
+                'Luyện đàm thoại với Gia sư AI',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+                overflow: TextOverflow.ellipsis,
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => AiWritingScreen(initialVerb: verb)),
+                );
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildHeroAiChatCard(BuildContext context) {
+    return Material(
+      color: Colors.white,
+      borderRadius: BorderRadius.circular(22),
+      child: InkWell(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (_) => const AiWritingScreen()),
+          );
+        },
+        borderRadius: BorderRadius.circular(22),
+        child: Container(
+          padding: const EdgeInsets.all(14),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(22),
+            border: Border.all(
+              color: const Color(0xFF10B981).withValues(alpha: 0.35),
+              width: 1.5,
+            ),
+            gradient: LinearGradient(
+              colors: [
+                Colors.white,
+                const Color(0xFF10B981).withValues(alpha: 0.05),
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: const Color(0xFF10B981).withValues(alpha: 0.08),
+                blurRadius: 14,
+                offset: const Offset(0, 4),
+              ),
+            ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(9),
+                    decoration: BoxDecoration(
+                      gradient: const LinearGradient(
+                        colors: [Color(0xFF10B981), Color(0xFF059669)],
+                      ),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: const Icon(Icons.smart_toy_rounded, color: Colors.white, size: 20),
+                  ),
+                  const SizedBox(width: 10),
+                  const Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Gia sư AI',
+                          style: TextStyle(fontWeight: FontWeight.w900, fontSize: 16),
+                        ),
+                        Text(
+                          'Đàm thoại tương tác 1:1',
+                          style: TextStyle(fontSize: 11, color: Color(0xFF059669), fontWeight: FontWeight.bold),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Flexible(
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFF10B981).withValues(alpha: 0.12),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: const Text(
+                          'MỚI: Dạng Chat',
+                          style: TextStyle(
+                            fontSize: 10,
+                            fontWeight: FontWeight.w800,
+                            color: Color(0xFF059669),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
+              Container(
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade50,
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: Colors.grey.shade200),
+                ),
+                child: const Row(
+                  children: [
+                    Icon(Icons.format_quote_rounded, size: 16, color: Color(0xFF10B981)),
+                    SizedBox(width: 6),
+                    Expanded(
+                      child: Text(
+                        'AI đặt câu hỏi thách đố, bạn trả lời & nhận đánh giá ngữ pháp chuẩn xác tức thì.',
+                        style: TextStyle(fontSize: 11.5, color: Color(0xFF334155), height: 1.3),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 10),
+              Row(
+                children: [
+                  const Expanded(
+                    child: Text(
+                      'Gia sư AI • Chấm điểm tức thì',
+                      style: TextStyle(fontSize: 11, color: Color(0xFF64748B)),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Flexible(
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            'Bắt đầu chat',
+                            style: TextStyle(
+                              color: AppTheme.primary,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12,
+                            ),
+                          ),
+                          const SizedBox(width: 2),
+                          const Icon(Icons.arrow_forward_rounded, size: 14, color: AppTheme.primary),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget _buildModernPracticeCard(
     BuildContext context, {
     required String title,
@@ -534,7 +820,7 @@ class HomeScreen extends ConsumerWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 4),
+              const SizedBox(height: 6),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
@@ -709,7 +995,7 @@ class HomeScreen extends ConsumerWidget {
                     );
                   },
                   icon: const Icon(Icons.logout_rounded),
-                  label: const Text('Đăng xuất'),
+                  label: const Text('Đăng xuất', style: TextStyle(fontWeight: FontWeight.bold)),
                 ),
               ),
             ],
