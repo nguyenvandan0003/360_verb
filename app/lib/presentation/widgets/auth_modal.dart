@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import '../../core/theme/app_theme.dart';
 import '../../logic/auth_provider.dart';
 
@@ -105,6 +106,27 @@ class _AuthModalState extends ConsumerState<AuthModal> with SingleTickerProvider
       } else {
         final err = ref.read(authProvider).errorMessage;
         setState(() => _localError = err ?? 'Đăng ký không thành công.');
+      }
+    }
+  }
+
+  Future<void> _handleAppleSignIn() async {
+    setState(() => _localError = null);
+    final success = await ref.read(authProvider.notifier).loginWithApple();
+    if (mounted) {
+      if (success) {
+        Navigator.pop(context, true);
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('🎉 Đăng nhập Apple thành công! Đã kích hoạt Gia sư AI DeepSeek.'),
+            backgroundColor: Color(0xFF10B981),
+          ),
+        );
+      } else {
+        final err = ref.read(authProvider).errorMessage;
+        if (err != null) {
+          setState(() => _localError = err);
+        }
       }
     }
   }
@@ -400,6 +422,34 @@ class _AuthModalState extends ConsumerState<AuthModal> with SingleTickerProvider
                       ],
                     ),
                   ),
+                const SizedBox(height: 14),
+                Row(
+                  children: [
+                    Expanded(child: Divider(color: Colors.grey.shade300)),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                      child: Text(
+                        'HOẶC',
+                        style: TextStyle(
+                          color: Colors.grey.shade500,
+                          fontSize: isCompact ? 10 : 12,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    Expanded(child: Divider(color: Colors.grey.shade300)),
+                  ],
+                ),
+                SizedBox(height: isCompact ? 10 : 14),
+
+                // Apple Sign-in Button
+                SignInWithAppleButton(
+                  onPressed: authState.isLoading ? null : _handleAppleSignIn,
+                  text: 'Đăng nhập bằng Apple',
+                  height: isCompact ? 42 : 48,
+                  style: SignInWithAppleButtonStyle.black,
+                  borderRadius: BorderRadius.circular(12),
+                ),
               ],
             ),
           ),

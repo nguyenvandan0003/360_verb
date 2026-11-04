@@ -9,7 +9,9 @@ import (
 
 	"github.com/antigravity/verb360/backend/internal/ai"
 	"github.com/pocketbase/dbx"
+	"github.com/pocketbase/pocketbase/apis"
 	"github.com/pocketbase/pocketbase/core"
+	"github.com/pocketbase/pocketbase/tools/security"
 )
 
 type EvaluateRequest struct {
@@ -21,6 +23,13 @@ type EvaluateRequest struct {
 type ExamplesRequest struct {
 	VerbV1 string `json:"verb_v1"`
 	Topic  string `json:"topic"`
+}
+
+type AppleAuthRequest struct {
+	UserIdentifier string `json:"user_identifier"`
+	Email          string `json:"email"`
+	FullName       string `json:"full_name"`
+	IdentityToken  string `json:"identity_token"`
 }
 
 type IapVerifyRequest struct {
@@ -226,6 +235,82 @@ func RegisterCustomRoutes(e *core.ServeEvent, aiService ai.Service) {
 			"plan_type":      proPlan,
 			"pro_expires_at": proExpiresAt,
 		})
+	})
+
+	// Apple Native Sign-in Endpoint
+	e.Router.POST("/api/auth/apple", func(evt *core.RequestEvent) error {
+		var req AppleAuthRequest
+		if err := evt.BindBody(&req); err != nil {
+			return evt.BadRequestError("Dữ liệu đầu vào không hợp lệ", err)
+		}
+
+		req.UserIdentifier = strings.TrimSpace(req.UserIdentifier)
+		req.Email = strings.TrimSpace(strings.ToLower(req.Email))
+		req.FullName = strings.TrimSpace(req.FullName)
+
+		if req.UserIdentifier == "" {
+			return evt.BadRequestError("user_identifier từ Apple không được để trống", nil)
+		}
+
+		usersColl, err := evt.App.FindCollectionByNameOrId("users")
+		if err != nil || usersColl == nil {
+			return evt.InternalServerError("Không tìm thấy collection users", err)
+		}
+
+		var userRecord *core.Record
+
+		// 1. Search by apple_id
+		records, err := evt.App.FindRecordsByFilter(
+			"users",
+			"apple_id = {:appleId}",
+			"-created",
+			1,
+			0,
+			dbx.Params{"appleId": req.UserIdentifier},
+		)
+		if err == nil && len(records) > 0 {
+			userRecord = records[0]
+		}
+
+		// 2. Search by email if not found yet
+		if userRecord == nil && req.Email != "" {
+			userRecord, _ = evt.App.FindAuthRecordByEmail("users", req.Email)
+			if userRecord != nil {
+				userRecord.Set("apple_id", req.UserIdentifier)
+				if req.FullName != "" && userRecord.GetString("name") == "" {
+					userRecord.Set("name", req.FullName)
+				}
+				_ = evt.App.Save(userRecord)
+			}
+		}
+
+		// 3. Create new user if not found
+		if userRecord == nil {
+			userRecord = core.NewRecord(usersColl)
+
+			email := req.Email
+			if email == "" {
+				hash := sha256.Sum256([]byte(req.UserIdentifier))
+				email = "apple_" + hex.EncodeToString(hash[:6]) + "@privaterelay.apple.auth"
+			}
+
+			name := req.FullName
+			if name == "" {
+				name = "Học viên Apple"
+			}
+
+			randomPass := security.RandomString(24)
+			userRecord.SetEmail(email)
+			userRecord.SetPassword(randomPass)
+			userRecord.Set("name", name)
+			userRecord.Set("apple_id", req.UserIdentifier)
+
+			if err := evt.App.Save(userRecord); err != nil {
+				return evt.InternalServerError("Không thể khởi tạo tài khoản từ Apple Sign In", err)
+			}
+		}
+
+		return apis.RecordAuthResponse(evt, userRecord, "", nil)
 	})
 }
 

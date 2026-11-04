@@ -1,7 +1,9 @@
 import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pocketbase/pocketbase.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'ai_providers.dart';
 
 class UserProfile {
@@ -161,6 +163,88 @@ class AuthNotifier extends Notifier<AuthState> {
       state = state.copyWith(
         isLoading: false,
         errorMessage: 'Đăng ký thất bại: Email có thể đã tồn tại hoặc mật khẩu quá ngắn (tối thiểu 8 ký tự).',
+      );
+      return false;
+    }
+  }
+
+  Future<bool> loginWithApple() async {
+    state = state.copyWith(isLoading: true, errorMessage: null);
+    try {
+      final credential = await SignInWithApple.getAppleIDCredential(
+        scopes: [
+          AppleIDAuthorizationScopes.email,
+          AppleIDAuthorizationScopes.fullName,
+        ],
+      );
+
+      final userIdentifier = credential.userIdentifier;
+      if (userIdentifier == null || userIdentifier.isEmpty) {
+        state = state.copyWith(
+          isLoading: false,
+          errorMessage: 'Đăng nhập Apple thất bại: Không lấy được thông tin tài khoản.',
+        );
+        return false;
+      }
+
+      final email = credential.email ?? '';
+      final fullName = [
+        credential.givenName ?? '',
+        credential.familyName ?? '',
+      ].where((s) => s.isNotEmpty).join(' ');
+
+      final pbService = ref.read(pocketBaseServiceProvider);
+      final response = await http.post(
+        Uri.parse('${pbService.baseUrl}/api/auth/apple'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'user_identifier': userIdentifier,
+          'email': email,
+          'full_name': fullName,
+          'identity_token': credential.identityToken ?? '',
+        }),
+      );
+
+      if (response.statusCode != 200) {
+        final errJson = jsonDecode(response.body) as Map<String, dynamic>?;
+        final msg = errJson?['message'] as String? ?? 'Đăng nhập Apple không thành công.';
+        state = state.copyWith(isLoading: false, errorMessage: msg);
+        return false;
+      }
+
+      final resData = jsonDecode(response.body) as Map<String, dynamic>;
+      final token = resData['token'] as String;
+      final recordMap = resData['record'] as Map<String, dynamic>;
+      final recordModel = RecordModel(recordMap);
+
+      final user = UserProfile.fromRecord(recordModel);
+      pbService.pb.authStore.save(token, recordModel);
+
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString(_tokenKey, token);
+      await prefs.setString(_userKey, jsonEncode(user.toJson()));
+
+      state = AuthState(
+        isAuthenticated: true,
+        user: user,
+        token: token,
+        isLoading: false,
+      );
+      return true;
+    } on SignInWithAppleAuthorizationException catch (e) {
+      if (e.code == AuthorizationErrorCode.canceled) {
+        state = state.copyWith(isLoading: false);
+        return false;
+      }
+      state = state.copyWith(
+        isLoading: false,
+        errorMessage: 'Lỗi xác thực Apple: ${e.message}',
+      );
+      return false;
+    } catch (e) {
+      state = state.copyWith(
+        isLoading: false,
+        errorMessage: 'Lỗi đăng nhập Apple: $e',
       );
       return false;
     }
