@@ -55,4 +55,4 @@ For any privacy questions or requests:
 - **Email**: `nguyenvandan868@gmail.com`
 - **Phone**: `+84 355533893`
 - **Address**: Hanoi, Vietnam
-- **Website**: `https://360verb.phuongdan.io.vn`
+- **Website**: `https://verd.phuongdan.io.vn`

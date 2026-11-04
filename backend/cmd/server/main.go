@@ -1,6 +1,7 @@
 package main
 
 import (
+	"embed"
 	"log"
 	"os"
 
@@ -8,9 +9,13 @@ import (
 	"github.com/antigravity/verb360/backend/internal/hooks"
 	_ "github.com/antigravity/verb360/backend/migrations"
 	"github.com/pocketbase/pocketbase"
+	"github.com/pocketbase/pocketbase/apis"
 	"github.com/pocketbase/pocketbase/core"
 	"github.com/pocketbase/pocketbase/plugins/migratecmd"
 )
+
+//go:embed all:public
+var publicFS embed.FS
 
 func main() {
 	app := pocketbase.New()
@@ -29,6 +34,11 @@ func main() {
 
 	app.OnServe().BindFunc(func(e *core.ServeEvent) error {
 		hooks.RegisterCustomRoutes(e, aiService)
+
+		// Serve static metadata & legal docs (Privacy Policy, Terms of Service, Support, Landing Page)
+		subFS := apis.MustSubFS(publicFS, "public")
+		e.Router.GET("/{path...}", apis.Static(subFS, true))
+
 		return e.Next()
 	})
 

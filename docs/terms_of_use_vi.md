@@ -35,4 +35,4 @@ Các Điều khoản này được điều chỉnh và giải thích theo quy đ
 - **Email**: `nguyenvandan868@gmail.com`
 - **Số điện thoại**: `+84 355533893`
 - **Địa chỉ**: Hà Nội, Việt Nam
-- **Website**: `https://360verb.phuongdan.io.vn`
+- **Website**: `https://verd.phuongdan.io.vn`

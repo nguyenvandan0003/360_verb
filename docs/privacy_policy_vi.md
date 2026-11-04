@@ -37,4 +37,4 @@ Mọi thắc mắc về chính sách bảo mật, vui lòng liên hệ:
 - **Email**: `nguyenvandan868@gmail.com`
 - **Số điện thoại**: `+84 355533893`
 - **Địa chỉ**: Hà Nội, Việt Nam
-- **Website**: `https://360verb.phuongdan.io.vn`
+- **Website**: `https://verd.phuongdan.io.vn`

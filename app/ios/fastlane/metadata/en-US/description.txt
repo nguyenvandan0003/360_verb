@@ -45,5 +45,5 @@ Subscription Details:
 Payment will be charged to your Apple ID account at confirmation of purchase. Subscriptions automatically renew unless auto-renew is turned off at least 24 hours before the end of the current period. Your account will be charged for renewal within 24 hours prior to the end of the current period. You can manage or cancel your subscription anytime in your App Store Account Settings after purchase.
 
 ---
-Privacy Policy: https://360verb.phuongdan.io.vn/privacy.html
+Privacy Policy: https://verd.phuongdan.io.vn/privacy.html
 Terms of Use (EULA): https://www.apple.com/legal/internet-services/itunes/dev/stdeula/

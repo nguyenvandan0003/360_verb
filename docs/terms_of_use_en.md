@@ -41,4 +41,4 @@ These Terms are governed by and construed in accordance with the laws of Vietnam
 - **Email**: `nguyenvandan868@gmail.com`
 - **Phone**: `+84 355533893`
 - **Address**: Hanoi, Vietnam
-- **Website**: `https://360verb.phuongdan.io.vn`
+- **Website**: `https://verd.phuongdan.io.vn`
