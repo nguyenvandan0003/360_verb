@@ -41,9 +41,12 @@ class HomeScreen extends ConsumerWidget {
                 child: const Icon(Icons.menu_book_rounded, color: Colors.white, size: 18),
               ),
               const SizedBox(width: 8),
-              const Text(
-                'Verb360',
-                style: TextStyle(fontWeight: FontWeight.w800, fontSize: 18),
+              const Flexible(
+                child: Text(
+                  '360 Động từ bất quy tắc',
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(fontWeight: FontWeight.w800, fontSize: 16),
+                ),
               ),
             ],
           ),
@@ -181,14 +184,14 @@ class HomeScreen extends ConsumerWidget {
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: const Text(
-                  'Verb360 AI',
+                  '360 Động từ',
                   style: TextStyle(fontSize: 11, fontWeight: FontWeight.w800, color: AppTheme.primary),
                 ),
               ),
               const SizedBox(width: 8),
               Expanded(
                 child: Text(
-                  'Làm chủ 360 động từ với SRS & DeepSeek.',
+                  'Làm chủ 360 động từ với SRS & Gia sư AI.',
                   style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -275,7 +278,7 @@ class HomeScreen extends ConsumerWidget {
                     Text(
                       count > 0
                           ? 'Ôn lại đúng thời điểm vàng giúp kích hoạt trí nhớ dài hạn vĩnh viễn.'
-                          : 'Hãy rèn luyện thêm với Gia sư AI DeepSeek hoặc thử thách phản xạ.',
+                          : 'Hãy rèn luyện thêm với Gia sư AI hoặc thử thách phản xạ.',
                       style: TextStyle(color: Colors.white.withValues(alpha: 0.85), fontSize: 13),
                     ),
                     const SizedBox(height: 18),
@@ -345,7 +348,7 @@ class HomeScreen extends ConsumerWidget {
             subtitle: 'Chấm điểm cấu trúc thì, phân tích ngữ pháp & gợi ý viết lại tự nhiên chuẩn bản xứ',
             icon: Icons.auto_awesome_rounded,
             gradient: const [Color(0xFF10B981), Color(0xFF059669)],
-            tag: 'DeepSeek AI',
+            tag: 'Gia sư AI',
             isAi: true,
             onTap: () {
               Navigator.push(
@@ -684,7 +687,7 @@ class HomeScreen extends ConsumerWidget {
               const Divider(),
               ListTile(
                 leading: const Icon(Icons.auto_awesome_rounded, color: Color(0xFF10B981)),
-                title: const Text('Trạng thái AI DeepSeek'),
+                title: const Text('Trạng thái Gia sư AI'),
                 subtitle: const Text('Đã kích hoạt • Gateway PocketBase'),
                 contentPadding: EdgeInsets.zero,
               ),

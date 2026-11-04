@@ -13,7 +13,7 @@ void main() {
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 300));
 
-    expect(find.text('Verb360 AI'), findsWidgets);
+    expect(find.text('360 Động từ bất quy tắc'), findsWidgets);
     expect(find.text('Trang chủ'), findsWidgets);
     expect(find.text('Tra cứu 360'), findsWidgets);
     expect(find.text('Gia sư AI'), findsWidgets);

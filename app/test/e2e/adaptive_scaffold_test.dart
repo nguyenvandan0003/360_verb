@@ -22,7 +22,7 @@ void main() {
 
       // Tab 0: Home
       expect(find.text('Trang chủ'), findsWidgets);
-      expect(find.text('Verb360 AI'), findsOneWidget);
+      expect(find.text('360 Động từ bất quy tắc'), findsOneWidget);
 
       // Tap Tab 1: Tra cứu 360
       await tester.tap(find.text('Tra cứu 360'));

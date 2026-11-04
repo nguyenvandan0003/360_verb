@@ -136,7 +136,7 @@ class ProfileScreen extends ConsumerWidget {
                                 SizedBox(width: 6),
                                 Flexible(
                                   child: Text(
-                                    'AI DeepSeek: Đã kích hoạt',
+                                    'Gia sư AI: Đã kích hoạt',
                                     style: TextStyle(color: Color(0xFF065F46), fontWeight: FontWeight.w700, fontSize: 12),
                                     overflow: TextOverflow.ellipsis,
                                   ),
@@ -299,7 +299,7 @@ class ProfileScreen extends ConsumerWidget {
                     const SizedBox(height: 14),
                     Text(
                       iapState.isPro
-                          ? 'Bạn đang sở hữu quyền truy cập không giới hạn AI DeepSeek, trọn bộ 360 động từ & toàn bộ tính năng cao cấp.'
+                          ? 'Bạn đang sở hữu quyền truy cập không giới hạn Gia sư AI, trọn bộ 360 động từ & toàn bộ tính năng cao cấp.'
                           : 'Nâng cấp VIP PRO để mở khóa trọn đời (299k), gói 1 năm (199k) hoặc gói 1 tháng (19k) với trải nghiệm tốt nhất.',
                       style: TextStyle(
                         fontSize: 13,
@@ -425,7 +425,7 @@ class ProfileScreen extends ConsumerWidget {
                   _buildBadgePill('🌟 Khởi đầu mới', state.badges.contains('newbie_starter')),
                   _buildBadgePill('🔥 Chăm chỉ 3 ngày', state.currentStreak >= 3),
                   _buildBadgePill('⚡ Bậc thầy A-A-A', state.totalXp >= 150),
-                  _buildBadgePill('🤖 AI DeepSeek Master', state.totalXp >= 250),
+                  _buildBadgePill('🤖 Gia Sư AI Master', state.totalXp >= 250),
                 ],
               ),
               const SizedBox(height: 20),
@@ -459,7 +459,7 @@ class ProfileScreen extends ConsumerWidget {
                           ),
                           SizedBox(height: 2),
                           Text(
-                            'verd.phuongdan.io.vn • IAP & DeepSeek Gateway',
+                            'verd.phuongdan.io.vn • IAP & AI Gateway',
                             style: TextStyle(color: Color(0xFF64748B), fontSize: 12),
                           ),
                         ],

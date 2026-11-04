@@ -32,7 +32,7 @@ class PocketBaseService {
     return headers;
   }
 
-  /// Evaluates user sentence via Backend AI Gateway (calling DeepSeek), with smart local fallback
+  /// Evaluates user sentence via Backend AI Gateway, with smart local fallback
   Future<AiEvaluation> evaluateSentence({
     required String verbV1,
     required String targetForm,
@@ -59,7 +59,7 @@ class PocketBaseService {
         return AiEvaluation.fromJson(result);
       } else if (response.statusCode == 401) {
         throw PocketBaseException(
-          'Vui lòng đăng nhập tài khoản để sử dụng trợ lý AI DeepSeek.',
+          'Vui lòng đăng nhập tài khoản để sử dụng trợ lý Gia sư AI.',
           statusCode: 401,
         );
       }
@@ -72,7 +72,7 @@ class PocketBaseService {
     return _offlineEvaluate(verbV1, targetForm, userSentence);
   }
 
-  /// Generates context examples via Backend AI Gateway (calling DeepSeek), with offline fallback
+  /// Generates context examples via Backend AI Gateway, with offline fallback
   Future<List<ContextExample>> getContextExamples({
     required String verbV1,
     String topic = 'daily life',
@@ -97,7 +97,7 @@ class PocketBaseService {
         return list.map((e) => ContextExample.fromJson(e as Map<String, dynamic>)).toList();
       } else if (response.statusCode == 401) {
         throw PocketBaseException(
-          'Vui lòng đăng nhập để mở khóa ví dụ ngữ cảnh từ DeepSeek AI.',
+          'Vui lòng đăng nhập để mở khóa ví dụ ngữ cảnh từ Gia sư AI.',
           statusCode: 401,
         );
       }

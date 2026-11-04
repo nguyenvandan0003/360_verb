@@ -290,7 +290,7 @@ void main() {
         ),
       );
 
-      expect(find.text('Verb360'), findsOneWidget);
+      expect(find.text('360 Động từ bất quy tắc'), findsOneWidget);
       expect(tester.takeException(), isNull, reason: 'HomeScreen must not overflow at 300dp with 1.5x text scale');
     });
 

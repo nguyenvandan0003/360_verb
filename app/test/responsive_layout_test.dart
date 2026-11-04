@@ -85,7 +85,7 @@ void main() {
 
         expect(find.byType(NavigationRail), findsOneWidget, reason: '${entry.$1} must have NavigationRail');
         expect(find.byType(NavigationBar), findsNothing, reason: '${entry.$1} must not have NavigationBar');
-        expect(find.text('Verb360 AI'), findsOneWidget);
+        expect(find.text('360 Động từ bất quy tắc'), findsOneWidget);
         expect(find.text('Trang chủ Page'), findsOneWidget);
         expect(tester.takeException(), isNull);
       }
@@ -103,7 +103,7 @@ void main() {
           ),
         );
 
-        expect(find.text('Verb360'), findsOneWidget);
+        expect(find.text('360 Động từ bất quy tắc'), findsOneWidget);
         expect(find.text('SRS Spaced Repetition'), findsOneWidget);
         expect(find.text('Gia sư AI'), findsWidgets);
         expect(tester.takeException(), isNull);
@@ -166,7 +166,7 @@ void main() {
         );
 
         expect(find.text('Gia Sư AI Viết Câu'), findsOneWidget);
-        expect(find.text('Kiểm tra câu với DeepSeek AI'), findsOneWidget);
+        expect(find.text('Kiểm tra câu với Gia sư AI'), findsOneWidget);
         expect(tester.takeException(), isNull);
       });
     }

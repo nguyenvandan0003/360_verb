@@ -176,7 +176,7 @@ class _VerbDetailScreenState extends ConsumerState<VerbDetailScreen> {
           ),
           const SizedBox(height: 16),
 
-          // DeepSeek AI Context Generator Section
+          // AI Context Generator Section
           Container(
             padding: const EdgeInsets.all(18),
             decoration: BoxDecoration(
@@ -208,7 +208,7 @@ class _VerbDetailScreenState extends ConsumerState<VerbDetailScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Gia Sư AI DeepSeek',
+                            'Gia Sư AI',
                             style: TextStyle(fontWeight: FontWeight.w800, fontSize: 15),
                           ),
                           Text(
@@ -388,7 +388,7 @@ class _VerbDetailScreenState extends ConsumerState<VerbDetailScreen> {
                 SizedBox(width: 8),
                 Flexible(
                   child: Text(
-                    'Luyện Viết Câu Với Gia Sư AI DeepSeek',
+                    'Luyện Viết Câu Với Gia Sư AI',
                     style: TextStyle(fontWeight: FontWeight.w800, fontSize: 15),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,

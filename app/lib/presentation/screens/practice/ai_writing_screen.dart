@@ -126,7 +126,7 @@ class _AiWritingScreenState extends ConsumerState<AiWritingScreen> {
                                       const SizedBox(width: 10),
                                       Expanded(
                                         child: Text(
-                                          'Đã kết nối DeepSeek AI (${authState.user?.name ?? 'Tài khoản'})',
+                                          'Đã kết nối Gia sư AI (${authState.user?.name ?? 'Tài khoản'})',
                                           style: const TextStyle(
                                             color: Color(0xFF065F46),
                                             fontWeight: FontWeight.w700,
@@ -165,8 +165,8 @@ class _AiWritingScreenState extends ConsumerState<AiWritingScreen> {
                                 Expanded(
                                   child: Text(
                                     iapState.isPro
-                                        ? 'VIP PRO: AI DeepSeek Không giới hạn (${authState.user?.name ?? 'Tài khoản'})'
-                                        : 'Đã kết nối DeepSeek AI (${authState.user?.name ?? 'Tài khoản'})',
+                                        ? 'VIP PRO: Gia sư AI không giới hạn (${authState.user?.name ?? 'Tài khoản'})'
+                                        : 'Đã kết nối Gia sư AI (${authState.user?.name ?? 'Tài khoản'})',
                                     style: TextStyle(
                                       color: iapState.isPro ? Colors.amber.shade900 : const Color(0xFF065F46),
                                       fontWeight: FontWeight.w700,
@@ -311,7 +311,7 @@ class _AiWritingScreenState extends ConsumerState<AiWritingScreen> {
                                       )
                                     : const Icon(Icons.send_rounded, size: 18),
                                 label: Text(
-                                  evalAsync.isLoading ? 'DeepSeek đang chấm...' : 'Kiểm tra câu với DeepSeek AI',
+                                  evalAsync.isLoading ? 'Gia sư AI đang chấm...' : 'Kiểm tra câu với Gia sư AI',
                                   style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 15),
                                 ),
                               ),

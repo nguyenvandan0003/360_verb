@@ -73,7 +73,7 @@ class _AuthModalState extends ConsumerState<AuthModal> with SingleTickerProvider
         Navigator.pop(context, true);
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('🎉 Đăng nhập thành công! Đã kích hoạt Gia sư AI DeepSeek.'),
+            content: Text('🎉 Đăng nhập thành công! Đã kích hoạt Gia sư AI.'),
             backgroundColor: Color(0xFF10B981),
           ),
         );
@@ -99,7 +99,7 @@ class _AuthModalState extends ConsumerState<AuthModal> with SingleTickerProvider
         Navigator.pop(context, true);
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('🎉 Tạo tài khoản thành công! Chào mừng bạn đến với Verb360.'),
+            content: Text('🎉 Tạo tài khoản thành công! Chào mừng bạn đến với 360 Động từ bất quy tắc.'),
             backgroundColor: Color(0xFF10B981),
           ),
         );
@@ -118,7 +118,7 @@ class _AuthModalState extends ConsumerState<AuthModal> with SingleTickerProvider
         Navigator.pop(context, true);
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('🎉 Đăng nhập Apple thành công! Đã kích hoạt Gia sư AI DeepSeek.'),
+            content: Text('🎉 Đăng nhập Apple thành công! Đã kích hoạt Gia sư AI.'),
             backgroundColor: Color(0xFF10B981),
           ),
         );
@@ -170,7 +170,7 @@ class _AuthModalState extends ConsumerState<AuthModal> with SingleTickerProvider
                 ),
                 SizedBox(height: isCompact ? 8 : 16),
 
-                // Header with AI DeepSeek branding
+                // Header with Gia sư AI branding
                 Row(
                   children: [
                     Container(
@@ -189,11 +189,11 @@ class _AuthModalState extends ConsumerState<AuthModal> with SingleTickerProvider
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Tài Khoản Verb360 & AI',
+                            'Tài Khoản & Gia Sư AI',
                             style: TextStyle(fontSize: isCompact ? 15 : 18, fontWeight: FontWeight.bold),
                           ),
                           Text(
-                            'Đăng nhập để mở khóa Gia sư AI DeepSeek',
+                            'Đăng nhập để mở khóa Gia sư AI',
                             style: TextStyle(fontSize: isCompact ? 11 : 13, color: Colors.grey.shade600),
                           ),
                         ],

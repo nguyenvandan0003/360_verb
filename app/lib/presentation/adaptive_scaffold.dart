@@ -64,7 +64,7 @@ class _AdaptiveScaffoldState extends State<AdaptiveScaffold> {
                         ),
                         const SizedBox(width: 8),
                         const Text(
-                          'Verb360 AI',
+                          '360 Động từ bất quy tắc',
                           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                         ),
                       ],

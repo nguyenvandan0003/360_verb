@@ -82,7 +82,7 @@ class PaywallModal extends ConsumerWidget {
                           ),
                         ),
                         Text(
-                          'Mở khóa toàn năng AI DeepSeek & 360 Động Từ',
+                          'Mở khóa toàn năng Gia sư AI & 360 Động Từ',
                           style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
                         ),
                       ],
@@ -106,7 +106,7 @@ class PaywallModal extends ConsumerWidget {
                 ),
                 child: const Column(
                   children: [
-                    _BenefitRow(icon: Icons.auto_awesome_rounded, text: 'Gia sư AI DeepSeek không giới hạn số lượt chấm'),
+                    _BenefitRow(icon: Icons.auto_awesome_rounded, text: 'Gia sư AI không giới hạn số lượt chấm'),
                     SizedBox(height: 10),
                     _BenefitRow(icon: Icons.menu_book_rounded, text: 'Trọn bộ 360 động từ & phát âm audio bản xứ offline'),
                     SizedBox(height: 10),
