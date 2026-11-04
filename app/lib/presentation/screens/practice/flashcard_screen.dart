@@ -87,7 +87,7 @@ class _FlashcardScreenState extends ConsumerState<FlashcardScreen> with SingleTi
       return Scaffold(
         appBar: AppBar(title: const Text('Hoàn thành')),
         body: Center(
-          child: Padding(
+          child: SingleChildScrollView(
             padding: const EdgeInsets.all(24),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -235,7 +235,7 @@ class _FlashcardScreenState extends ConsumerState<FlashcardScreen> with SingleTi
       elevation: 3,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       child: Center(
-        child: Padding(
+        child: SingleChildScrollView(
           padding: const EdgeInsets.all(24),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -252,9 +252,12 @@ class _FlashcardScreenState extends ConsumerState<FlashcardScreen> with SingleTi
                 ),
               ),
               const SizedBox(height: 24),
-              Text(
-                verb.v1,
-                style: const TextStyle(fontSize: 40, fontWeight: FontWeight.bold, color: AppTheme.primary),
+              FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(
+                  verb.v1,
+                  style: const TextStyle(fontSize: 40, fontWeight: FontWeight.bold, color: AppTheme.primary),
+                ),
               ),
               const SizedBox(height: 8),
               Text(
@@ -286,7 +289,7 @@ class _FlashcardScreenState extends ConsumerState<FlashcardScreen> with SingleTi
         borderRadius: BorderRadius.circular(20),
         side: const BorderSide(color: Color(0xFF4F46E5), width: 1.5),
       ),
-      child: Padding(
+      child: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -304,27 +307,45 @@ class _FlashcardScreenState extends ConsumerState<FlashcardScreen> with SingleTi
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(color: Colors.grey.shade200),
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Column(
-                    children: [
-                      const Text('Quá khứ (V2)', style: TextStyle(fontSize: 11, color: Colors.grey)),
-                      const SizedBox(height: 4),
-                      Text(verb.v2, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.indigo)),
-                      Text(verb.ipaV2, style: const TextStyle(fontSize: 11, fontStyle: FontStyle.italic, color: Colors.grey)),
-                    ],
-                  ),
-                  const VerticalDivider(width: 1),
-                  Column(
-                    children: [
-                      const Text('Phân từ (V3)', style: TextStyle(fontSize: 11, color: Colors.grey)),
-                      const SizedBox(height: 4),
-                      Text(verb.v3, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.purple)),
-                      Text(verb.ipaV3, style: const TextStyle(fontSize: 11, fontStyle: FontStyle.italic, color: Colors.grey)),
-                    ],
-                  ),
-                ],
+              child: IntrinsicHeight(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Expanded(
+                      child: Column(
+                        children: [
+                          const Text('Quá khứ (V2)', style: TextStyle(fontSize: 11, color: Colors.grey)),
+                          const SizedBox(height: 4),
+                          FittedBox(
+                            fit: BoxFit.scaleDown,
+                            child: Text(verb.v2, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.indigo)),
+                          ),
+                          FittedBox(
+                            fit: BoxFit.scaleDown,
+                            child: Text(verb.ipaV2, style: const TextStyle(fontSize: 11, fontStyle: FontStyle.italic, color: Colors.grey)),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const VerticalDivider(width: 1),
+                    Expanded(
+                      child: Column(
+                        children: [
+                          const Text('Phân từ (V3)', style: TextStyle(fontSize: 11, color: Colors.grey)),
+                          const SizedBox(height: 4),
+                          FittedBox(
+                            fit: BoxFit.scaleDown,
+                            child: Text(verb.v3, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.purple)),
+                          ),
+                          FittedBox(
+                            fit: BoxFit.scaleDown,
+                            child: Text(verb.ipaV3, style: const TextStyle(fontSize: 11, fontStyle: FontStyle.italic, color: Colors.grey)),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
             const SizedBox(height: 16),

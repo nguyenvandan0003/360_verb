@@ -1,0 +1,4 @@
+Initial App Store release of Verb360 AI:
+- Complete 360 English irregular verbs with offline native audio pronunciation.
+- DeepSeek AI tutor for instant grammar analysis and contextual sentence generation.
+- SM-2 spaced repetition system and 4 interactive practice modes.

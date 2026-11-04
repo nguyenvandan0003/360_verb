@@ -1,0 +1,49 @@
+Verb360 AI is your comprehensive and intelligent companion to master all 360 English irregular verbs. Combining scientific cognitive learning principles with cutting-edge DeepSeek AI, Verb360 transforms the tedious memorization of irregular verbs into an intuitive, engaging, and lasting learning experience.
+
+Whether preparing for IELTS, TOEIC, Cambridge, TOEFL exams, or advancing professional communication, mastering irregular verbs is fundamental to English fluency. Verb360 provides structured tools, precise native phonetics, and interactive exercises to help you achieve mastery.
+
+KEY FEATURES
+
+1. Complete 360 Irregular Verbs Database
+- Full verb forms: Base Form (V1), Past Simple (V2), and Past Participle (V3).
+- Standard International Phonetic Alphabet (IPA) transcriptions for every verb form.
+- High-definition native pronunciation audio available completely offline.
+- Clear bilingual contextual meanings and practical real-life example sentences.
+- Categorization by morphological patterns: A-A-A, A-B-A, A-B-B, and A-B-C.
+- CEFR level filters: A1, A2, B1, B2, C1, and C2.
+
+2. DeepSeek AI Context & Writing Tutor
+- AI Context Generator: Automatically creates realistic example sentences across practical topics including daily conversation, travel, business, and technology.
+- Instant AI Grammar Evaluation: Evaluates user-composed sentences for target verb and tense accuracy.
+- Actionable Feedback: Provides comprehensive scoring (1-10), tense analysis, grammar explanations, and natural phrasing suggestions.
+- High-speed semantic caching ensures instantaneous feedback and seamless performance.
+
+3. Scientific Spaced Repetition System (SRS SM-2)
+- Based on the proven SuperMemo-2 algorithm to optimize memory retention.
+- Dynamically calculates Ease Factor (EF), repetition intervals, and optimal review schedules based on your recall confidence.
+- Daily review queue prominently displayed on your dashboard to reinforce retention without burnout.
+
+4. 4 Interactive Practice Modes
+- SRS Flashcards: Two-sided interactive flashcards with 4 recall grading levels (Again, Hard, Good, Easy).
+- Fill in the Blanks: Test your knowledge by conjugating V2 and V3 forms in practical sentences.
+- 60-Second Speed Quiz: High-intensity rapid-fire quiz with countdown timer, streak combos, and XP bonuses.
+- AI Writing Challenge: Compose original sentences with target verbs and receive immediate DeepSeek AI analysis.
+
+5. Gamification and Offline-First Experience
+- Maintain daily study streaks, gain XP points, level up, and unlock mastery achievement badges.
+- 100% offline-ready dictionary and flashcard practice.
+- Automatic cloud synchronization with secure PocketBase backend whenever online.
+- Adaptive Material 3 design supporting both phone and tablet interfaces.
+
+IN-APP PURCHASES & SUBSCRIPTIONS
+Verb360 VIP PRO unlocks unlimited DeepSeek AI sentence evaluations, complete native audio playback, and advanced challenge modes:
+- Monthly Subscription: 19,000 VND / month (auto-renewing)
+- Yearly Subscription: 199,000 VND / year (auto-renewing, save 15%)
+- Lifetime Access: 299,000 VND (one-time purchase, lifetime access)
+
+Subscription Details:
+Payment will be charged to your Apple ID account at confirmation of purchase. Subscriptions automatically renew unless auto-renew is turned off at least 24 hours before the end of the current period. Your account will be charged for renewal within 24 hours prior to the end of the current period. You can manage or cancel your subscription anytime in your App Store Account Settings after purchase.
+
+---
+Privacy Policy: https://360verb.phuongdan.io.vn/privacy.html
+Terms of Use (EULA): https://www.apple.com/legal/internet-services/itunes/dev/stdeula/

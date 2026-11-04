@@ -65,7 +65,7 @@ class _FillBlanksScreenState extends ConsumerState<FillBlanksScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Điền khuyết V2 & V3'),
+        title: const Text('Điền Khuyết Động Từ'),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 16),
@@ -199,7 +199,7 @@ class _FillBlanksScreenState extends ConsumerState<FillBlanksScreen> {
                             Icon(_isCorrect ? Icons.check_circle : Icons.cancel, color: _isCorrect ? Colors.green : Colors.red),
                             const SizedBox(width: 8),
                             Text(
-                              _isCorrect ? 'Chính xác! (+15 XP)' : 'Chưa đúng rồi!',
+                              _isCorrect ? 'Chính xác! +15 XP' : 'Chưa đúng rồi!',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 16,
@@ -222,7 +222,7 @@ class _FillBlanksScreenState extends ConsumerState<FillBlanksScreen> {
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                     ),
                     onPressed: () => _nextWord(verbs.length),
-                    child: const Text('Từ tiếp theo →', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                    child: const Text('Từ tiếp theo', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
                   ),
                 ],
               ],

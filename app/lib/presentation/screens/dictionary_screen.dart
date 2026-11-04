@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../core/theme/app_theme.dart';
 import '../../data/models/verb.dart';
 import '../../logic/verb_providers.dart';
 import '../../logic/tts_provider.dart';
@@ -17,30 +18,34 @@ class DictionaryScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Tra cứu 360 Động Từ'),
+        title: const Text('Từ Điển 360 Động Từ'),
       ),
       body: Column(
         children: [
           // Search Bar
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
             child: TextField(
               decoration: InputDecoration(
-                hintText: 'Tìm kiếm V1, V2, V3 hoặc nghĩa tiếng Việt...',
-                prefixIcon: const Icon(Icons.search_rounded),
+                hintText: 'Tìm theo V1, V2, V3 hoặc nghĩa tiếng Việt...',
+                prefixIcon: const Icon(Icons.search_rounded, color: AppTheme.primary),
                 suffixIcon: IconButton(
-                  icon: const Icon(Icons.clear_rounded),
+                  icon: const Icon(Icons.clear_rounded, size: 20),
                   onPressed: () {
                     ref.read(searchQueryProvider.notifier).clear();
                   },
                 ),
                 filled: true,
-                fillColor: Colors.grey.shade100,
+                fillColor: Colors.white,
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(14),
-                  borderSide: BorderSide.none,
+                  borderRadius: BorderRadius.circular(16),
+                  borderSide: BorderSide(color: Colors.black.withValues(alpha: 0.08)),
                 ),
-                contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 16),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  borderSide: BorderSide(color: Colors.black.withValues(alpha: 0.08)),
+                ),
+                contentPadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
               ),
               onChanged: (val) {
                 ref.read(searchQueryProvider.notifier).setQuery(val);
@@ -51,21 +56,21 @@ class DictionaryScreen extends ConsumerWidget {
           // Filter Chips Horizontal Scroll
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
             child: Row(
               children: [
                 _buildFilterChip(
-                  label: 'Tất cả',
+                  label: 'Tất cả 360',
                   isSelected: selectedMorph == null && selectedCefr == null,
                   onSelected: (_) {
                     ref.read(selectedMorphGroupProvider.notifier).setGroup(null);
                     ref.read(selectedCefrLevelProvider.notifier).setLevel(null);
                   },
                 ),
-                const SizedBox(width: 6),
+                const SizedBox(width: 8),
                 ...['AAA', 'ABB', 'ABC', 'ABA'].map((group) {
                   return Padding(
-                    padding: const EdgeInsets.only(right: 6),
+                    padding: const EdgeInsets.only(right: 8),
                     child: _buildFilterChip(
                       label: 'Nhóm $group',
                       isSelected: selectedMorph == group,
@@ -75,10 +80,15 @@ class DictionaryScreen extends ConsumerWidget {
                     ),
                   );
                 }),
-                const VerticalDivider(width: 16, thickness: 1),
+                Container(
+                  height: 20,
+                  width: 1,
+                  color: Colors.grey.shade300,
+                  margin: const EdgeInsets.symmetric(horizontal: 6),
+                ),
                 ...['A1', 'A2', 'B1', 'B2', 'C1'].map((cefr) {
                   return Padding(
-                    padding: const EdgeInsets.only(right: 6),
+                    padding: const EdgeInsets.only(right: 8),
                     child: _buildFilterChip(
                       label: cefr,
                       isSelected: selectedCefr == cefr,
@@ -91,20 +101,23 @@ class DictionaryScreen extends ConsumerWidget {
               ],
             ),
           ),
-          const Divider(height: 12),
+          const SizedBox(height: 6),
 
           // Verb List
           Expanded(
             child: filteredVerbsAsync.when(
               data: (verbs) {
                 if (verbs.isEmpty) {
-                  return const Center(
+                  return Center(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(Icons.search_off_rounded, size: 48, color: Colors.grey),
-                        SizedBox(height: 12),
-                        Text('Không tìm thấy động từ nào phù hợp', style: TextStyle(color: Colors.grey)),
+                        Icon(Icons.search_off_rounded, size: 56, color: Colors.grey.shade400),
+                        const SizedBox(height: 14),
+                        Text(
+                          'Không tìm thấy động từ nào phù hợp',
+                          style: TextStyle(color: Colors.grey.shade600, fontSize: 15, fontWeight: FontWeight.w600),
+                        ),
                       ],
                     ),
                   );
@@ -113,10 +126,10 @@ class DictionaryScreen extends ConsumerWidget {
                 return ListView.separated(
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   itemCount: verbs.length,
-                  separatorBuilder: (_, _) => const SizedBox(height: 8),
+                  separatorBuilder: (_, _) => const SizedBox(height: 10),
                   itemBuilder: (context, index) {
                     final verb = verbs[index];
-                    return _buildVerbCard(context, verb, tts);
+                    return _buildModernVerbCard(context, verb, tts);
                   },
                 );
               },
@@ -135,123 +148,161 @@ class DictionaryScreen extends ConsumerWidget {
     required ValueChanged<bool> onSelected,
   }) {
     return ChoiceChip(
-      label: Text(label, style: TextStyle(fontSize: 12, fontWeight: isSelected ? FontWeight.bold : FontWeight.normal)),
+      label: Text(label),
       selected: isSelected,
       onSelected: onSelected,
-      selectedColor: const Color(0xFF4F46E5).withValues(alpha: 0.15),
+      selectedColor: AppTheme.primarySubtle,
+      side: BorderSide(
+        color: isSelected ? AppTheme.primary : Colors.grey.shade300,
+        width: isSelected ? 1.5 : 1,
+      ),
+      labelStyle: TextStyle(
+        fontSize: 12,
+        fontWeight: isSelected ? FontWeight.w800 : FontWeight.w600,
+        color: isSelected ? AppTheme.primary : Colors.black87,
+      ),
       visualDensity: VisualDensity.compact,
     );
   }
 
-  Widget _buildVerbCard(BuildContext context, Verb verb, dynamic tts) {
-    return Card(
-      elevation: 0.5,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(14),
-        side: BorderSide(color: Colors.grey.shade200),
+  Widget _buildModernVerbCard(BuildContext context, Verb verb, dynamic tts) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(18),
+        border: Border.all(color: Colors.black.withValues(alpha: 0.05)),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.02),
+            blurRadius: 8,
+            offset: const Offset(0, 2),
+          ),
+        ],
       ),
-      child: InkWell(
-        borderRadius: BorderRadius.circular(14),
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (_) => VerbDetailScreen(verb: verb)),
-          );
-        },
-        child: Padding(
-          padding: const EdgeInsets.all(14),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              // Rank badge
-              Container(
-                width: 34,
-                height: 34,
-                decoration: BoxDecoration(
-                  color: Colors.indigo.shade50,
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                alignment: Alignment.center,
-                child: Text(
-                  '#${verb.commonRank}',
-                  style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Colors.indigo.shade700),
-                ),
-              ),
-              const SizedBox(width: 12),
-
-              // Forms & Meaning
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(18),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => VerbDetailScreen(verb: verb)),
+            );
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Top row: Rank, Forms, Audio
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Row(
-                      children: [
-                        Text(
-                          verb.v1,
-                          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                        ),
-                        const SizedBox(width: 8),
-                        Text(
-                          '→ ${verb.v2} → ${verb.v3}',
-                          style: TextStyle(fontSize: 13, color: Colors.indigo.shade600, fontWeight: FontWeight.w600),
-                        ),
-                      ],
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: AppTheme.primarySubtle,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Text(
+                        '#${verb.commonRank}',
+                        style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w800, color: AppTheme.primary),
+                      ),
                     ),
-                    const SizedBox(height: 4),
-                    Text(
-                      verb.meaningVi,
-                      style: TextStyle(fontSize: 13, color: Colors.grey.shade800),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Wrap(
+                        spacing: 6,
+                        runSpacing: 4,
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        children: [
+                          _buildFormTag(verb.v1, const Color(0xFF3B82F6)),
+                          const Icon(Icons.arrow_right_alt_rounded, size: 16, color: Colors.grey),
+                          _buildFormTag(verb.v2, const Color(0xFFF59E0B)),
+                          const Icon(Icons.arrow_right_alt_rounded, size: 16, color: Colors.grey),
+                          _buildFormTag(verb.v3, const Color(0xFF10B981)),
+                        ],
+                      ),
                     ),
-                    const SizedBox(height: 4),
-                    Row(
-                      children: [
-                        Text(
-                          verb.ipaV1,
-                          style: TextStyle(fontSize: 11, fontStyle: FontStyle.italic, color: Colors.grey.shade600),
-                        ),
-                        const SizedBox(width: 10),
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 1),
-                          decoration: BoxDecoration(
-                            color: Colors.purple.shade50,
-                            borderRadius: BorderRadius.circular(4),
-                          ),
-                          child: Text(
-                            verb.morphGroup,
-                            style: TextStyle(fontSize: 10, color: Colors.purple.shade700, fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        const SizedBox(width: 6),
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 1),
-                          decoration: BoxDecoration(
-                            color: Colors.teal.shade50,
-                            borderRadius: BorderRadius.circular(4),
-                          ),
-                          child: Text(
-                            verb.cefrLevel,
-                            style: TextStyle(fontSize: 10, color: Colors.teal.shade700, fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ],
+                    IconButton(
+                      icon: const Icon(Icons.volume_up_rounded, color: AppTheme.primary, size: 22),
+                      tooltip: 'Phát âm V1, V2, V3',
+                      visualDensity: VisualDensity.compact,
+                      onPressed: () {
+                        tts.speak('${verb.v1}, ${verb.v2}, ${verb.v3}');
+                      },
                     ),
                   ],
                 ),
-              ),
+                const SizedBox(height: 10),
 
-              // Audio Pronounce Button
-              IconButton(
-                icon: const Icon(Icons.volume_up_rounded, color: Color(0xFF4F46E5)),
-                tooltip: 'Phát âm V1, V2, V3',
-                onPressed: () {
-                  tts.speak('${verb.v1}, ${verb.v2}, ${verb.v3}');
-                },
-              ),
-            ],
+                // Meaning & IPA
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        verb.meaningVi,
+                        style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: Color(0xFF0F172A)),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 6),
+
+                // Sub badges: IPA, MorphGroup, CEFR
+                Row(
+                  children: [
+                    Flexible(
+                      child: Text(
+                        verb.ipaV1,
+                        style: TextStyle(fontSize: 11, fontStyle: FontStyle.italic, color: Colors.grey.shade600),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                      decoration: BoxDecoration(
+                        color: Colors.purple.shade50,
+                        borderRadius: BorderRadius.circular(6),
+                      ),
+                      child: Text(
+                        verb.morphGroup,
+                        style: TextStyle(fontSize: 10, color: Colors.purple.shade700, fontWeight: FontWeight.w700),
+                      ),
+                    ),
+                    const SizedBox(width: 6),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF10B981).withValues(alpha: 0.12),
+                        borderRadius: BorderRadius.circular(6),
+                      ),
+                      child: Text(
+                        verb.cefrLevel,
+                        style: const TextStyle(fontSize: 10, color: Color(0xFF065F46), fontWeight: FontWeight.w700),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildFormTag(String text, Color color) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: 0.1),
+        borderRadius: BorderRadius.circular(6),
+      ),
+      child: Text(
+        text,
+        style: TextStyle(fontSize: 13, fontWeight: FontWeight.w800, color: color),
       ),
     );
   }

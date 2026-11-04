@@ -1,0 +1,5 @@
+- Official release of Verb360 AI with full 360 irregular verbs database.
+- Integrated DeepSeek AI grammar evaluation and context example generator.
+- Scientific SM-2 spaced repetition flashcards.
+- 4 interactive practice modes: Flashcard SRS, Fill in the Blanks, Speed Quiz, and AI Writing.
+- 100% offline-ready dictionary with native audio pronunciation.

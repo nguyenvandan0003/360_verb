@@ -1,0 +1,4 @@
+Phát hành phiên bản đầu tiên của Verb360 AI trên App Store:
+- Trọn bộ 360 động từ bất quy tắc kèm phát âm audio giọng bản xứ ngoại tuyến.
+- Gia sư DeepSeek AI chấm và chữa câu theo thì thông minh.
+- Thuật toán lặp lại ngắt quãng SM-2 và 4 chế độ luyện tập thực chiến.

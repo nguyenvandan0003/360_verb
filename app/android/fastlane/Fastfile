@@ -1,0 +1,35 @@
+# Fastfile for Verb360 AI (Android)
+default_platform(:android)
+
+platform :android do
+  desc "Build AAB and Upload to Internal Testing track"
+  lane :beta do
+    upload_to_play_store(
+      track: "internal",
+      aab: "../build/app/outputs/bundle/release/app-release.aab",
+      skip_upload_metadata: true,
+      skip_upload_images: true,
+      skip_upload_screenshots: true
+    )
+  end
+
+  desc "Deliver Google Play Store Metadata only"
+  lane :metadata do
+    supply(
+      metadata_path: "./metadata/android",
+      skip_upload_aab: true,
+      skip_upload_apk: true,
+      skip_upload_images: true,
+      skip_upload_screenshots: true
+    )
+  end
+
+  desc "Upload Release AAB and Metadata to Google Play Production track"
+  lane :release do
+    upload_to_play_store(
+      track: "production",
+      aab: "../build/app/outputs/bundle/release/app-release.aab",
+      metadata_path: "./metadata/android"
+    )
+  end
+end

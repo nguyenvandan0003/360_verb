@@ -14,6 +14,7 @@ class AiEvaluationNotifier extends Notifier<AsyncValue<AiEvaluation?>> {
     required String verbV1,
     required String targetForm,
     required String userSentence,
+    String? token,
   }) async {
     state = const AsyncLoading();
     final pbService = ref.read(pocketBaseServiceProvider);
@@ -23,6 +24,7 @@ class AiEvaluationNotifier extends Notifier<AsyncValue<AiEvaluation?>> {
         verbV1: verbV1,
         targetForm: targetForm,
         userSentence: userSentence,
+        token: token,
       );
       state = AsyncData(eval);
       return eval;
@@ -39,9 +41,9 @@ final aiEvaluationProvider = NotifierProvider<AiEvaluationNotifier, AsyncValue<A
   AiEvaluationNotifier.new,
 );
 
-final contextExamplesFamilyProvider = FutureProvider.family<List<ContextExample>, ({String verbV1, String topic})>(
+final contextExamplesFamilyProvider = FutureProvider.family<List<ContextExample>, ({String verbV1, String topic, String? token})>(
   (ref, arg) async {
     final pbService = ref.watch(pocketBaseServiceProvider);
-    return pbService.getContextExamples(verbV1: arg.verbV1, topic: arg.topic);
+    return pbService.getContextExamples(verbV1: arg.verbV1, topic: arg.topic, token: arg.token);
   },
 );

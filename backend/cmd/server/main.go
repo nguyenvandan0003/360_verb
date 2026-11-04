@@ -20,9 +20,12 @@ func main() {
 		Automigrate: true,
 	})
 
-	apiKey := os.Getenv("GEMINI_API_KEY")
-	model := os.Getenv("GEMINI_MODEL")
-	aiService := ai.NewGeminiService(apiKey, model)
+	apiKey := os.Getenv("DEEPSEEK_API_KEY")
+	model := os.Getenv("DEEPSEEK_MODEL")
+	if model == "" {
+		model = "deepseek-chat"
+	}
+	aiService := ai.NewDeepSeekService(apiKey, model)
 
 	app.OnServe().BindFunc(func(e *core.ServeEvent) error {
 		hooks.RegisterCustomRoutes(e, aiService)

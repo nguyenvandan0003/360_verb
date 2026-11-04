@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy - Verb360 AI</title>
+  <style>
+    :root {
+      --primary: #2563eb;
+      --text: #1f2937;
+      --text-muted: #4b5563;
+      --bg: #f9fafb;
+      --card-bg: #ffffff;
+      --border: #e5e7eb;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.65;
+      color: var(--text);
+      background-color: var(--bg);
+      margin: 0;
+      padding: 24px 16px;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: var(--card-bg);
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+      border: 1px solid var(--border);
+    }
+    .lang-switcher {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .lang-switcher a {
+      padding: 6px 12px;
+      background: #eff6ff;
+      border-radius: 6px;
+      font-weight: 500;
+    }
+    h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #111827;
+      margin-top: 0;
+      margin-bottom: 8px;
+    }
+    .last-updated {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 16px;
+    }
+    h2 {
+      font-size: 1.35rem;
+      font-weight: 600;
+      color: #1f2937;
+      margin-top: 32px;
+      margin-bottom: 12px;
+    }
+    h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #374151;
+      margin-top: 20px;
+      margin-bottom: 8px;
+    }
+    p, li {
+      color: var(--text-muted);
+      font-size: 1rem;
+    }
+    ul {
+      padding-left: 24px;
+      margin-bottom: 16px;
+    }
+    li {
+      margin-bottom: 6px;
+    }
+    a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    .footer {
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="lang-switcher">
+      <a href="privacy_policy_en.html">English Version</a>
+      <a href="privacy_policy_vi.html">Tiếng Việt</a>
+    </div>
+    <h1>Privacy Policy for Verb360 AI</h1>
+    <div class="last-updated"><strong>Last updated:</strong> November 4, 2026</div>
+
+    <p>Verb360 AI ("we", "our", or "us"), operated by Dan Nguyen Van (PhuongDan), is committed to protecting your privacy. This Privacy Policy explains how our mobile application and associated backend services collect, use, and protect your information when you use Verb360 AI on iOS, Android, and Web.</p>
+
+    <h2>1. Information We Collect</h2>
+
+    <h3>A. Information You Provide</h3>
+    <ul>
+      <li><strong>Account Registration Information:</strong> When you register an optional account to sync progress across devices, we collect your email address, display name, and encrypted password.</li>
+      <li><strong>User-Generated Writing Submissions:</strong> Sentences you submit for AI grammar evaluation and practice.</li>
+    </ul>
+
+    <h3>B. Information Collected Automatically</h3>
+    <ul>
+      <li><strong>Learning &amp; Practice Progress:</strong> Word mastery levels, SRS SM-2 flashcard intervals, quiz scores, XP points, and streak counts. This data is stored locally on your device by default and synchronized to our secure PocketBase server only if you log in.</li>
+      <li><strong>Diagnostic and Device Data:</strong> Device model, operating system version, and anonymous crash logs strictly for app stability improvements.</li>
+    </ul>
+
+    <h3>C. In-App Purchase Data</h3>
+    <p>All financial transactions are processed securely through Apple App Store (StoreKit) or Google Play Store (Google Play Billing). We never receive, process, or store your credit card or billing details. We only receive an anonymous purchase token, product ID, and order ID to unlock your VIP PRO features.</p>
+
+    <h2>2. Artificial Intelligence and DeepSeek API Processing</h2>
+    <p>When you use the AI Writing Tutor feature:</p>
+    <ul>
+      <li>Your sentence and the target verb are transmitted securely via TLS 1.3 to our backend and processed through the DeepSeek Chat API strictly to evaluate grammar, analyze tense accuracy, and generate helpful feedback.</li>
+      <li>We utilize an anonymous cryptographic hash (SHA-256) to cache evaluations in our SQLite database, avoiding redundant API calls and reducing latency.</li>
+      <li>Your submitted sentences are never sold, rented, or used for targeted commercial profiling.</li>
+    </ul>
+
+    <h2>3. How We Use Your Information</h2>
+    <p>We use your data solely to:</p>
+    <ul>
+      <li>Deliver and maintain the core learning features of Verb360 AI.</li>
+      <li>Calculate and update your personalized SM-2 spaced repetition review schedules.</li>
+      <li>Synchronize your progress across authorized devices.</li>
+      <li>Verify and manage your VIP PRO subscription or lifetime license.</li>
+      <li>Respond to support inquiries and improve application performance.</li>
+    </ul>
+
+    <h2>4. Data Storage, Security, and Offline Operation</h2>
+    <ul>
+      <li>Verb360 AI is built with an <strong>offline-first</strong> architecture. The entire 360 irregular verb dictionary, native audio files, and flashcards function 100% offline without requiring internet access or transmitting data.</li>
+      <li>Cloud synchronization uses encrypted PocketBase SQLite databases with WAL mode hosted on private, hardened server infrastructure.</li>
+    </ul>
+
+    <h2>5. Third-Party Services</h2>
+    <p>We integrate with trusted providers who adhere to strict data security practices:</p>
+    <ul>
+      <li><strong>Apple App Store &amp; Google Play:</strong> In-app purchase verification and distribution.</li>
+      <li><strong>DeepSeek AI:</strong> Secure natural language processing for grammar feedback.</li>
+      <li>We do NOT include third-party advertising SDKs or tracking pixels.</li>
+    </ul>
+
+    <h2>6. Account Deletion and Data Retention</h2>
+    <p>You retain complete control over your personal data:</p>
+    <ul>
+      <li>You may delete your account and all associated cloud learning records at any time directly within the application settings or by emailing <a href="mailto:nguyenvandan868@gmail.com">nguyenvandan868@gmail.com</a>.</li>
+      <li>Upon deletion, your account and progress records are permanently purged from our servers within 30 days.</li>
+    </ul>
+
+    <h2>7. Children's Privacy</h2>
+    <p>Verb360 AI does not knowingly collect personally identifiable information from children under 13 years of age. If we discover a child under 13 has provided personal data, we will immediately remove it.</p>
+
+    <h2>8. Contact Us</h2>
+    <p>For any privacy questions or requests:</p>
+    <ul>
+      <li><strong>Developer:</strong> Dan Nguyen Van (PhuongDan)</li>
+      <li><strong>Email:</strong> <a href="mailto:nguyenvandan868@gmail.com">nguyenvandan868@gmail.com</a></li>
+      <li><strong>Phone:</strong> +84 355533893</li>
+      <li><strong>Address:</strong> Hanoi, Vietnam</li>
+      <li><strong>Website:</strong> <a href="https://360verb.phuongdan.io.vn">https://360verb.phuongdan.io.vn</a></li>
+    </ul>
+
+    <div class="footer">
+      &copy; 2026 Verb360 AI. All rights reserved.
+    </div>
+  </div>
+</body>
+</html>

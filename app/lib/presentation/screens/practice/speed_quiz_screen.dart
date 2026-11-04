@@ -88,7 +88,7 @@ class _SpeedQuizScreenState extends ConsumerState<SpeedQuizScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Phản xạ 60 Giây'),
+        title: const Text('Phản Xạ Nhanh 60s'),
         actions: [
           Container(
             margin: const EdgeInsets.only(right: 16),
@@ -123,7 +123,7 @@ class _SpeedQuizScreenState extends ConsumerState<SpeedQuizScreen> {
 
           if (_isGameOver) {
             return Center(
-              child: Padding(
+              child: SingleChildScrollView(
                 padding: const EdgeInsets.all(24),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -162,79 +162,267 @@ class _SpeedQuizScreenState extends ConsumerState<SpeedQuizScreen> {
 
           final currentVerb = verbs[_currentVerbIndex];
 
-          return Padding(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text('Điểm: $_score', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                    if (_combo > 1)
-                      Text('🔥 Combo x$_combo', style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.orange)),
-                  ],
-                ),
-                const SizedBox(height: 24),
+          return LayoutBuilder(
+            builder: (context, constraints) {
+              final isLandscape = constraints.maxWidth > constraints.maxHeight && constraints.maxHeight < 500;
+              final isConstrainedHeight = constraints.maxHeight < 420;
 
-                // Question Box
-                Card(
-                  elevation: 2,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-                  child: Padding(
-                    padding: const EdgeInsets.all(24),
-                    child: Column(
+              if (isLandscape || isConstrainedHeight) {
+                return SingleChildScrollView(
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                  child: constraints.maxWidth >= 480
+                      ? Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            // Left column: Score & Question Card
+                            Expanded(
+                              flex: 5,
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text('Điểm: $_score', style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                                      if (_combo > 1)
+                                        Text('🔥 Combo x$_combo', style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.orange)),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Card(
+                                    elevation: 2,
+                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Text(
+                                            _askForV2 ? 'Dạng Quá khứ (V2) của:' : 'Dạng Phân từ (V3) của:',
+                                            style: TextStyle(fontSize: 13, color: Colors.grey.shade600, fontWeight: FontWeight.w500),
+                                          ),
+                                          const SizedBox(height: 6),
+                                          FittedBox(
+                                            fit: BoxFit.scaleDown,
+                                            child: Text(
+                                              currentVerb.v1,
+                                              style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: AppTheme.primary),
+                                            ),
+                                          ),
+                                          const SizedBox(height: 4),
+                                          Text(
+                                            '(${currentVerb.meaningVi})',
+                                            style: TextStyle(fontSize: 13, color: Colors.grey.shade800),
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(width: 14),
+                            // Right column: Choices grid
+                            Expanded(
+                              flex: 6,
+                              child: GridView.count(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                crossAxisCount: 2,
+                                childAspectRatio: 2.2,
+                                crossAxisSpacing: 8,
+                                mainAxisSpacing: 8,
+                                children: _options.map((opt) {
+                                  return ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.white,
+                                      foregroundColor: const Color(0xFF1E293B),
+                                      elevation: 1,
+                                      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(12),
+                                        side: BorderSide(color: Colors.grey.shade300),
+                                      ),
+                                    ),
+                                    onPressed: () => _chooseOption(opt, currentVerb, verbs),
+                                    child: FittedBox(
+                                      fit: BoxFit.scaleDown,
+                                      child: Text(
+                                        opt,
+                                        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                  );
+                                }).toList(),
+                              ),
+                            ),
+                          ],
+                        )
+                      : Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text('Điểm: $_score', style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                                if (_combo > 1)
+                                  Text('🔥 Combo x$_combo', style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.orange)),
+                              ],
+                            ),
+                            const SizedBox(height: 8),
+                            Card(
+                              elevation: 2,
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text(
+                                      _askForV2 ? 'Dạng Quá khứ (V2) của:' : 'Dạng Phân từ (V3) của:',
+                                      style: TextStyle(fontSize: 13, color: Colors.grey.shade600, fontWeight: FontWeight.w500),
+                                    ),
+                                    const SizedBox(height: 6),
+                                    FittedBox(
+                                      fit: BoxFit.scaleDown,
+                                      child: Text(
+                                        currentVerb.v1,
+                                        style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: AppTheme.primary),
+                                      ),
+                                    ),
+                                    const SizedBox(height: 4),
+                                    Text(
+                                      '(${currentVerb.meaningVi})',
+                                      style: TextStyle(fontSize: 13, color: Colors.grey.shade800),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 12),
+                            GridView.count(
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              crossAxisCount: 2,
+                              childAspectRatio: 2.0,
+                              crossAxisSpacing: 8,
+                              mainAxisSpacing: 8,
+                              children: _options.map((opt) {
+                                return ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.white,
+                                    foregroundColor: const Color(0xFF1E293B),
+                                    elevation: 1,
+                                    padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(12),
+                                      side: BorderSide(color: Colors.grey.shade300),
+                                    ),
+                                  ),
+                                  onPressed: () => _chooseOption(opt, currentVerb, verbs),
+                                  child: FittedBox(
+                                    fit: BoxFit.scaleDown,
+                                    child: Text(
+                                      opt,
+                                      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                );
+                              }).toList(),
+                            ),
+                          ],
+                        ),
+                );
+              }
+
+              // Standard portrait mode (height >= 420dp)
+              return Padding(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          _askForV2 ? 'Dạng Quá khứ (V2) của:' : 'Dạng Phân từ (V3) của:',
-                          style: TextStyle(fontSize: 14, color: Colors.grey.shade600, fontWeight: FontWeight.w500),
-                        ),
-                        const SizedBox(height: 12),
-                        Text(
-                          currentVerb.v1,
-                          style: const TextStyle(fontSize: 36, fontWeight: FontWeight.bold, color: AppTheme.primary),
-                        ),
-                        const SizedBox(height: 6),
-                        Text(
-                          '(${currentVerb.meaningVi})',
-                          style: TextStyle(fontSize: 15, color: Colors.grey.shade800),
-                        ),
+                        Text('Điểm: $_score', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                        if (_combo > 1)
+                          Text('🔥 Combo x$_combo', style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.orange)),
                       ],
                     ),
-                  ),
-                ),
-                const SizedBox(height: 24),
+                    const SizedBox(height: 24),
 
-                // 4 Choices
-                Expanded(
-                  child: GridView.count(
-                    crossAxisCount: 2,
-                    childAspectRatio: 1.8,
-                    crossAxisSpacing: 12,
-                    mainAxisSpacing: 12,
-                    children: _options.map((opt) {
-                      return ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.white,
-                          foregroundColor: const Color(0xFF1E293B),
-                          elevation: 1,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(14),
-                            side: BorderSide(color: Colors.grey.shade300),
-                          ),
+                    // Question Box
+                    Card(
+                      elevation: 2,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                      child: Padding(
+                        padding: const EdgeInsets.all(24),
+                        child: Column(
+                          children: [
+                            Text(
+                              _askForV2 ? 'Dạng Quá khứ (V2) của:' : 'Dạng Phân từ (V3) của:',
+                              style: TextStyle(fontSize: 14, color: Colors.grey.shade600, fontWeight: FontWeight.w500),
+                            ),
+                            const SizedBox(height: 12),
+                            FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: Text(
+                                currentVerb.v1,
+                                style: const TextStyle(fontSize: 36, fontWeight: FontWeight.bold, color: AppTheme.primary),
+                              ),
+                            ),
+                            const SizedBox(height: 6),
+                            Text(
+                              '(${currentVerb.meaningVi})',
+                              style: TextStyle(fontSize: 15, color: Colors.grey.shade800),
+                            ),
+                          ],
                         ),
-                        onPressed: () => _chooseOption(opt, currentVerb, verbs),
-                        child: Text(
-                          opt,
-                          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                          textAlign: TextAlign.center,
-                        ),
-                      );
-                    }).toList(),
-                  ),
+                      ),
+                    ),
+                    const SizedBox(height: 24),
+
+                    // 4 Choices
+                    Expanded(
+                      child: GridView.count(
+                        crossAxisCount: 2,
+                        childAspectRatio: 1.8,
+                        crossAxisSpacing: 12,
+                        mainAxisSpacing: 12,
+                        children: _options.map((opt) {
+                          return ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.white,
+                              foregroundColor: const Color(0xFF1E293B),
+                              elevation: 1,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(14),
+                                side: BorderSide(color: Colors.grey.shade300),
+                              ),
+                            ),
+                            onPressed: () => _chooseOption(opt, currentVerb, verbs),
+                            child: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: Text(
+                                opt,
+                                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              );
+            },
           );
         },
         loading: () => const Center(child: CircularProgressIndicator()),

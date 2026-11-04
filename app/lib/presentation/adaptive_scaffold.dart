@@ -26,6 +26,14 @@ class _AdaptiveScaffoldState extends State<AdaptiveScaffold> {
   }
 
   @override
+  void didUpdateWidget(covariant AdaptiveScaffold oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.initialIndex != oldWidget.initialIndex) {
+      setState(() => _currentIndex = widget.initialIndex);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {

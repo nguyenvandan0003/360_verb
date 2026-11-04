@@ -1,0 +1,5 @@
+- Ra mắt phiên bản chính thức Verb360 AI với trọn bộ 360 động từ bất quy tắc.
+- Tích hợp gia sư DeepSeek AI chấm và sửa câu thông minh.
+- Thẻ ghi nhớ flashcard ứng dụng thuật toán lặp lại ngắt quãng SM-2.
+- 4 chế độ luyện tập: Flashcard SRS, Điền khuyết, Phản xạ 60 giây và Viết câu cùng AI.
+- Tra cứu và phát âm chuẩn bản xứ ngoại tuyến 100%.

@@ -1,0 +1,12 @@
+Demo account for App Store Reviewer:
+Email: reviewer@verb360.phuongdan.io.vn
+Password: ReviewerPass123!
+
+App Highlights:
+- Complete 360 English irregular verbs dictionary with offline native audio pronunciation.
+- DeepSeek AI tutor for sentence evaluation and thematic example generation.
+- Spaced Repetition (SM-2) flashcard training.
+- 4 practice modes: Flashcard SRS, Fill in Blanks, Speed Quiz (60s), AI Writing.
+- In-App Purchases: Monthly, Yearly auto-renewing subscriptions, and Lifetime non-consumable access. StoreKit sandbox testing supported.
+
+Thank you for reviewing our application!

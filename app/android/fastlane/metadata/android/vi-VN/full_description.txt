@@ -1,0 +1,49 @@
+Verb360 AI là ứng dụng học tập toàn diện và thông minh giúp bạn làm chủ trọn bộ 360 động từ bất quy tắc tiếng Anh. Kết hợp phương pháp ghi nhớ khoa học với công nghệ trí tuệ nhân tạo DeepSeek AI, Verb360 biến việc ghi nhớ trở nên trực quan, hứng thú và bền vững.
+
+Dù bạn đang ôn luyện thi IELTS, TOEIC, TOEFL, thi THPT Quốc gia hay giao tiếp công việc hàng ngày, 360 động từ bất quy tắc luôn là nền tảng cốt lõi. Verb360 cung cấp hệ thống tra cứu chuẩn xác, phát âm bản xứ, và các chế độ luyện tập phong phú.
+
+CÁC TÍNH NĂNG NỔI BẬT
+
+1. Kho Dữ Liệu Chuẩn 360 Động Từ Bất Quy Tắc
+- Đầy đủ 3 thể: Nguyên thể (V1), Quá khứ đơn (V2) và Quá khứ phân từ (V3).
+- Phiên âm quốc tế IPA chuẩn xác cho từng thể biến đổi.
+- Phát âm giọng bản xứ chất lượng cao hoạt động ngoại tuyến 100%.
+- Nghĩa tiếng Việt rõ ràng và ví dụ câu song ngữ thực tế.
+- Phân loại theo quy luật hình thái thông minh: Nhóm A-A-A, A-B-A, A-B-B, A-B-C.
+- Bộ lọc cấp độ CEFR từ cơ bản đến nâng cao: A1, A2, B1, B2, C1, C2.
+
+2. Gia Sư Ngữ Cảnh & Chấm Câu DeepSeek AI
+- Sinh ví dụ theo chủ đề: Tự động tạo câu ví dụ gần gũi theo các chủ đề đời sống, du lịch, công việc, công nghệ.
+- Chấm điểm và sửa câu tức thì: Đánh giá câu bạn tự viết với động từ chỉ định, chấm điểm thang 1-10.
+- Phân tích ngữ pháp chi tiết: Giải thích thì động từ sử dụng, chỉ ra lỗi sai và đề xuất câu viết tự nhiên nhất.
+- Bộ đệm Semantic Cache giúp phản hồi nhanh chóng và tiết kiệm tài nguyên.
+
+3. Thuật Toán Lặp Lại Ngắt Quãng (SRS SM-2)
+- Áp dụng thuật toán SuperMemo-2 giúp tối ưu hóa khả năng ghi nhớ dài hạn vào bộ nhớ.
+- Tự động tính toán hệ số dễ nhớ (Ease Factor), khoảng cách ngày và lịch trình ôn tập phù hợp với mức độ nhớ của từng cá nhân.
+- Danh sách từ cần ôn hàng ngày hiển thị ngay trang chủ giúp duy trì thói quen học tập đều đặn.
+
+4. 4 Chế Độ Luyện Tập Đa Dạng
+- Thẻ ghi nhớ Flashcard SRS: Tương tác lật thẻ 2 mặt kèm 4 mức đánh giá nhớ (Quên, Khó, Tốt, Dễ).
+- Điền khuyết: Thử thách chia đúng thể V2 và V3 vào vị trí thiếu trong câu.
+- Phản xạ 60 giây (Speed Quiz): Thử thách trắc nghiệm nhanh với đồng hồ đếm ngược, tích lũy chuỗi combo và điểm kinh nghiệm XP.
+- Thử thách viết câu cùng AI: Tự do đặt câu với động từ yêu cầu và nhận nhận xét tức thì từ DeepSeek AI.
+
+5. Gamification & Hoạt Động Ngoại Tuyến
+- Duy trì chuỗi ngày học liên tục (Streak), tích lũy XP, thăng hạng cấp độ và mở khóa bộ sưu tập huy hiệu thành tích.
+- Hoạt động ngoại tuyến 100% cho toàn bộ từ điển và flashcard.
+- Tự động đồng bộ tiến độ lên máy chủ PocketBase khi kết nối mạng.
+- Giao diện Material 3 thích ứng linh hoạt giữa điện thoại và máy tính bảng.
+
+GÓI NÂNG CẤP VERB360 VIP PRO
+Mở khóa toàn bộ sức mạnh AI DeepSeek, không giới hạn số lượt chấm câu và truy cập tất cả chế độ luyện tập nâng cao:
+- Gói 1 Tháng: 19.000 đ / tháng (Tự động gia hạn)
+- Gói 1 Năm: 199.000 đ / năm (Tự động gia hạn, tiết kiệm 15%)
+- Gói Trọn Đời: 299.000 đ (Thanh toán 1 lần duy nhất, sở hữu vĩnh viễn)
+
+Quy định đăng ký & gia hạn:
+Khoản thanh toán sẽ được tính vào tài khoản Google Play của bạn khi xác nhận mua hàng. Gói đăng ký tự động gia hạn trừ khi tính năng tự động gia hạn bị tắt ít nhất 24 giờ trước khi kết thúc chu kỳ hiện tại. Bạn có thể quản lý hoặc hủy gói đăng ký bất kỳ lúc nào trong phần Đăng ký trên Google Play Store sau khi mua.
+
+---
+Privacy Policy: https://360verb.phuongdan.io.vn/privacy.html
+Terms of Service: https://360verb.phuongdan.io.vn/terms.html

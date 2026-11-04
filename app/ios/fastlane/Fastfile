@@ -1,0 +1,40 @@
+# Fastfile for Verb360 AI (iOS)
+default_platform(:ios)
+
+platform :ios do
+  desc "Build & Upload Beta to TestFlight"
+  lane :beta do
+    build_app(
+      workspace: "Runner.xcworkspace",
+      scheme: "Runner",
+      export_method: "app-store"
+    )
+    upload_to_testflight(
+      skip_waiting_for_build_processing: true
+    )
+  end
+
+  desc "Deliver App Store Metadata only without binary upload"
+  lane :metadata do
+    deliver(
+      metadata_path: "./metadata",
+      skip_binary_upload: true,
+      skip_screenshots: true,
+      force: true
+    )
+  end
+
+  desc "Upload Release IPA and Metadata to App Store"
+  lane :release do
+    build_app(
+      workspace: "Runner.xcworkspace",
+      scheme: "Runner",
+      export_method: "app-store"
+    )
+    deliver(
+      metadata_path: "./metadata",
+      skip_screenshots: false,
+      force: true
+    )
+  end
+end

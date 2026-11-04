@@ -5,8 +5,8 @@ import (
 	"testing"
 )
 
-func TestGeminiService_MockEvaluation(t *testing.T) {
-	service := NewGeminiService("", "")
+func TestDeepSeekService_MockEvaluation(t *testing.T) {
+	service := NewDeepSeekService("", "")
 
 	ctx := context.Background()
 	res, err := service.EvaluateSentence(ctx, "go", "V2", "I went to school yesterday.")
@@ -22,8 +22,8 @@ func TestGeminiService_MockEvaluation(t *testing.T) {
 	}
 }
 
-func TestGeminiService_EmptySentence(t *testing.T) {
-	service := NewGeminiService("", "")
+func TestDeepSeekService_EmptySentence(t *testing.T) {
+	service := NewDeepSeekService("", "")
 
 	ctx := context.Background()
 	res, err := service.EvaluateSentence(ctx, "take", "V2", "   ")
@@ -36,8 +36,8 @@ func TestGeminiService_EmptySentence(t *testing.T) {
 	}
 }
 
-func TestGeminiService_GenerateExamples(t *testing.T) {
-	service := NewGeminiService("", "")
+func TestDeepSeekService_GenerateExamples(t *testing.T) {
+	service := NewDeepSeekService("", "")
 
 	ctx := context.Background()
 	examples, err := service.GenerateContextExamples(ctx, "break", "work")
