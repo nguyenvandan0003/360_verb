@@ -18,7 +18,7 @@ class Verb360App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Verb360 AI - 360 Động Từ Bất Quy Tắc',
+      title: '360 Động từ bất quy tắc',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,

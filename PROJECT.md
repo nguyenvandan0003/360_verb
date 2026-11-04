@@ -4,7 +4,7 @@
 - **Framework**: Flutter Multiplatform (`app/`), Target: Android & iOS, with Riverpod (`flutter_riverpod`) state management and Material 3 design.
 - **Backend**: Golang with PocketBase (`backend/`), Go Event Hooks, local SQLite WAL mode, REST & SSE APIs at `https://verd.phuongdan.io.vn` (LAN: `http://192.168.1.5:8103`).
 - **Target Application ID**: `vn.phuongdan.360verb` on iOS (`PRODUCT_BUNDLE_IDENTIFIER`); on Android, due to strict Java/AAPT2 identifier rules prohibiting segment leading digits (`360verb`), Android uses `vn.phuongdan.verb360` (or `vn.phuongdan.v360verb`) for `namespace` and `applicationId`.
-- **Display Name**: `Verb360 AI` across Android (`AndroidManifest.xml`) and iOS (`Info.plist`).
+- **Display Name**: `360 Động từ bất quy tắc` across Android (`AndroidManifest.xml`) and iOS (`Info.plist`).
 - **Core Modules**:
   1. `app/lib/data`: Models (`Verb`, `IapProduct`), repositories, and services (TTS, PocketBase client, Local Cache).
   2. `app/lib/logic`: Riverpod providers for dictionary, SRS (SM-2 Spaced Repetition), AI writing tutor (DeepSeek), gamification (XP, streaks), and IAP.
