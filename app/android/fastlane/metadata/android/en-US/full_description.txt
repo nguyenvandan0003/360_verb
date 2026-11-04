@@ -46,3 +46,4 @@ Payment will be charged to your Google Play account at confirmation of purchase.
 ---
 Privacy Policy: https://verd.phuongdan.io.vn/privacy.html
 Terms of Service: https://verd.phuongdan.io.vn/terms.html
+Support & Help: https://verd.phuongdan.io.vn/support.html

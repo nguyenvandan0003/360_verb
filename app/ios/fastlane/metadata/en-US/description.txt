@@ -47,3 +47,4 @@ Payment will be charged to your Apple ID account at confirmation of purchase. Su
 ---
 Privacy Policy: https://verd.phuongdan.io.vn/privacy.html
 Terms of Use (EULA): https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
+Support & Help: https://verd.phuongdan.io.vn/support.html

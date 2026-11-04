@@ -1,4 +1,4 @@
-Verb360 AI là ứng dụng học tập toàn diện và thông minh giúp bạn làm chủ trọn bộ 360 động từ bất quy tắc tiếng Anh. Kết hợp phương pháp ghi nhớ khoa học với công nghệ trí tuệ nhân tạo DeepSeek AI, Verb360 biến việc ghi nhớ trở nên trực quan, hứng thú và bền vững.
+360 Động từ bất quy tắc (Verb360) là ứng dụng học tập toàn diện và thông minh giúp bạn làm chủ trọn bộ 360 động từ bất quy tắc tiếng Anh. Kết hợp phương pháp ghi nhớ khoa học với công nghệ trí tuệ nhân tạo DeepSeek AI, ứng dụng biến việc ghi nhớ trở nên trực quan, hứng thú và bền vững.
 
 Dù bạn đang ôn luyện thi IELTS, TOEIC, TOEFL, thi THPT Quốc gia hay giao tiếp công việc hàng ngày, 360 động từ bất quy tắc luôn là nền tảng cốt lõi. Verb360 cung cấp hệ thống tra cứu chuẩn xác, phát âm bản xứ, và các chế độ luyện tập phong phú.
 
@@ -47,3 +47,4 @@ Khoản thanh toán sẽ được tính vào tài khoản Apple ID của bạn k
 ---
 Privacy Policy: https://verd.phuongdan.io.vn/privacy.html
 Terms of Use (EULA): https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
+Support & Help: https://verd.phuongdan.io.vn/support.html
