@@ -20,3 +20,12 @@ app/.pub/
 .DS_Store
 *.swp
 *.bak
+
+# Keys and Secrets
+*.p8
+*.key
+*.jks
+*.keystore
+.env
+.env.*
+!*.example
