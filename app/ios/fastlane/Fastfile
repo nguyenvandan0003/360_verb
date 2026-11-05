@@ -27,6 +27,16 @@ platform :ios do
     end
   end
 
+  desc "Download Development Provisioning Profile"
+  lane :dev_profile do
+    get_provisioning_profile(
+      app_identifier: "vn.phuongdan.360verb",
+      team_id: "74Z46TRFH2",
+      development: true,
+      force: true
+    )
+  end
+
   desc "Deliver App Store Metadata only without binary upload"
   lane :metadata do
     deliver(
