@@ -34,11 +34,13 @@ class HomeScreen extends ConsumerWidget {
     final authState = ref.watch(authProvider);
     final iapState = ref.watch(iapProvider);
     final tts = ref.watch(ttsServiceProvider);
-    final isCompact = MediaQuery.of(context).size.width <= 360;
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isCompact = screenWidth <= 360;
+    final isMobilePhone = screenWidth < 500;
 
     return Scaffold(
       appBar: AppBar(
-        titleSpacing: isCompact ? 8 : 16,
+        titleSpacing: isCompact ? 8 : 12,
         title: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -74,15 +76,15 @@ class HomeScreen extends ConsumerWidget {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Text('🔥', style: TextStyle(fontSize: 12)),
+                  const Icon(Icons.local_fire_department_rounded, size: 14, color: Color(0xFFEA580C)),
                   const SizedBox(width: 2),
                   Text(
                     '${state.currentStreak}',
                     style: TextStyle(fontWeight: FontWeight.w800, color: Colors.amber.shade900, fontSize: 11),
                   ),
-                  if (!isCompact) ...[
+                  if (!isMobilePhone) ...[
                     const SizedBox(width: 4),
-                    const Text('⭐', style: TextStyle(fontSize: 11)),
+                    const Icon(Icons.star_rounded, size: 13, color: Color(0xFFD97706)),
                     const SizedBox(width: 1),
                     Text(
                       '${state.totalXp}',
@@ -152,7 +154,7 @@ class HomeScreen extends ConsumerWidget {
                       ),
                     ),
                   )
-                : (isCompact
+                : (isMobilePhone
                     ? IconButton(
                         icon: const Icon(Icons.login_rounded, size: 20, color: AppTheme.primary),
                         visualDensity: VisualDensity.compact,
@@ -179,11 +181,20 @@ class HomeScreen extends ConsumerWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         children: [
           // Greeting & Learning Subtitle
-          Text(
-            authState.isAuthenticated
-                ? '${_getGreeting()}, ${authState.user?.name ?? 'bạn'}! 👋'
-                : '${_getGreeting()}! 👋',
-            style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w900, letterSpacing: -0.5),
+          Row(
+            children: [
+              Flexible(
+                child: Text(
+                  authState.isAuthenticated
+                      ? '${_getGreeting()}, ${authState.user?.name ?? 'bạn'}!'
+                      : '${_getGreeting()}!',
+                  style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w900, letterSpacing: -0.5),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+              const SizedBox(width: 6),
+              const Icon(Icons.waving_hand_rounded, size: 22, color: Color(0xFFF59E0B)),
+            ],
           ),
           const SizedBox(height: 6),
           Wrap(
